@@ -1,3 +1,4 @@
+import 'package:asker/di/injectable.dart';
 import 'package:asker/features/main_screen/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  configureDependencies();
   runApp(const MyApp());
 }
 

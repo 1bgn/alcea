@@ -1,10 +1,12 @@
 import 'package:asker/common/MyColors.dart';
 import 'package:asker/common/widgets/custom_primary_button.dart';
+import 'package:asker/di/injectable.dart';
 import 'package:asker/features/main_screen/presentation/controller/main_screen_controller.dart';
 import 'package:asker/features/main_screen/presentation/widget/answer_widget.dart';
 import 'package:asker/features/main_screen/presentation/widget/ask_widget.dart';
 import 'package:asker/features/main_screen/presentation/widget/brand.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:signals/signals_flutter.dart';
 
@@ -14,7 +16,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final controller = MainScreenController();
+  final controller = getIt<MainScreenController>();
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     Brand(text: controller.currentBlock.brandName),
                     SizedBox(height: 8),
-                    AskWidget(text: controller.currentBlock.ask, number: 1),
+                    AskWidget(text: controller.currentBlock.ask, number: controller.currentAsk.value+1),
                     SizedBox(height: 32),
                     Watch(
                        (context) {
@@ -115,7 +117,13 @@ class _MainScreenState extends State<MainScreen> {
                               Expanded(
                                 child: CustomPrimaryButton(
                                   borderColor: MyColors.primaryColor,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if(controller.globalCheck()){
+                                      controller.globalCorrectAsks.value++;
+                                    }
+                                    controller.clearScreen();
+                                    controller.nextScreen();
+                                  },
                                   gradient: LinearGradient(
                                     colors: [
                                       Color(0xff63E9CA),
@@ -143,7 +151,9 @@ class _MainScreenState extends State<MainScreen> {
                               Expanded(
                                 child: CustomPrimaryButton(
                                   borderColor: Color(0xffB9F6E6),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.clearAll();
+                                  },
                                   icon: Image.asset("assets/back_arrow.png"),
                                   gradient: LinearGradient(
                                     colors: [
