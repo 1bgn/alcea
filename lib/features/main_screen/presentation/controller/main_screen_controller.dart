@@ -4,7 +4,7 @@ import 'package:asker/features/main_screen/domain/models/question_block.dart';
 import 'package:asker/features/main_screen/domain/usecase/get_data_usecase.dart';
 import 'package:injectable/injectable.dart';
 import 'package:signals/signals.dart';
-@Singleton()
+@LazySingleton()
 class MainScreenController {
   final GetDataUsecase getDataUsecase;
   MainScreenController(this.getDataUsecase);
@@ -17,8 +17,13 @@ class MainScreenController {
   void init() {
     tasks.value = getDataUsecase.execute();
   }
-  void nextScreen(){
-    currentAsk.value++;
+  bool nextScreen(){
+    if(currentAsk.value +1 <tasks.value.length){
+      currentAsk.value++;
+
+      return true;
+    }
+    return false;
   }
   void clearScreen(){
     currentAnswers.value = {};

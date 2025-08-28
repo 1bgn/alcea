@@ -8,7 +8,8 @@ class AnswerWidget extends StatelessWidget {
   final IsCorrect? isCorrect;
   final ValueChanged<bool>? onChanged;
   final bool value;
-  const AnswerWidget({super.key, required this.text, this.isCorrect, this.onChanged, required this.value});
+  final bool checkingMode;
+  const AnswerWidget({super.key, required this.text, this.isCorrect, this.onChanged, required this.value, required this.checkingMode});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class AnswerWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          CustomCheckbox(value: value, onChanged: onChanged,isCorrect: isCorrect,size: 24,inactiveBorderColor: Color(0xff979797),activeColor: MyColors.primaryColor,borderRadius: 4,),
+          CustomCheckbox(value: value, onChanged: checkingMode?null:onChanged,isCorrect: isCorrect,size: 24,inactiveBorderColor: Color(0xff979797),activeColor: MyColors.primaryColor,borderRadius: 4,),
           SizedBox(width: 16,),
           Expanded(
             child: Text(
