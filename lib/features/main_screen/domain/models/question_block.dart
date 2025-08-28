@@ -1,3 +1,4 @@
+import 'package:asker/features/main_screen/domain/models/answer.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'question_block.freezed.dart';
@@ -5,13 +6,11 @@ part 'question_block.freezed.dart';
 @freezed
 abstract class QuestionBlock with _$QuestionBlock{
   const factory QuestionBlock({
-   @Default("") final String ask,
-  @Default({})Map<String,bool> answers
+   required final String ask,
+    required final String brandName,
+  @Default([])List<Answer> answers
 })=_QuestionBlock;
 }
-extension QuestionBlockExtension on QuestionBlock{
-  bool get isMultiAnswers{
-    final answs = this.answers.values.where((e)=>e).length;
-    return answs>1;
-  }
-}
+// extension QuestionBlockExtension on QuestionBlock{
+//
+// }

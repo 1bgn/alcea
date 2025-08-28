@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$QuestionBlock {
 
- String get ask; Map<String, bool> get answers;
+ String get ask; String get brandName; List<Answer> get answers;
 /// Create a copy of QuestionBlock
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $QuestionBlockCopyWith<QuestionBlock> get copyWith => _$QuestionBlockCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is QuestionBlock&&(identical(other.ask, ask) || other.ask == ask)&&const DeepCollectionEquality().equals(other.answers, answers));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QuestionBlock&&(identical(other.ask, ask) || other.ask == ask)&&(identical(other.brandName, brandName) || other.brandName == brandName)&&const DeepCollectionEquality().equals(other.answers, answers));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,ask,const DeepCollectionEquality().hash(answers));
+int get hashCode => Object.hash(runtimeType,ask,brandName,const DeepCollectionEquality().hash(answers));
 
 @override
 String toString() {
-  return 'QuestionBlock(ask: $ask, answers: $answers)';
+  return 'QuestionBlock(ask: $ask, brandName: $brandName, answers: $answers)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $QuestionBlockCopyWith<$Res>  {
   factory $QuestionBlockCopyWith(QuestionBlock value, $Res Function(QuestionBlock) _then) = _$QuestionBlockCopyWithImpl;
 @useResult
 $Res call({
- String ask, Map<String, bool> answers
+ String ask, String brandName, List<Answer> answers
 });
 
 
@@ -62,11 +62,12 @@ class _$QuestionBlockCopyWithImpl<$Res>
 
 /// Create a copy of QuestionBlock
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? ask = null,Object? answers = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? ask = null,Object? brandName = null,Object? answers = null,}) {
   return _then(_self.copyWith(
 ask: null == ask ? _self.ask : ask // ignore: cast_nullable_to_non_nullable
+as String,brandName: null == brandName ? _self.brandName : brandName // ignore: cast_nullable_to_non_nullable
 as String,answers: null == answers ? _self.answers : answers // ignore: cast_nullable_to_non_nullable
-as Map<String, bool>,
+as List<Answer>,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String ask,  Map<String, bool> answers)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String ask,  String brandName,  List<Answer> answers)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _QuestionBlock() when $default != null:
-return $default(_that.ask,_that.answers);case _:
+return $default(_that.ask,_that.brandName,_that.answers);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.ask,_that.answers);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String ask,  Map<String, bool> answers)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String ask,  String brandName,  List<Answer> answers)  $default,) {final _that = this;
 switch (_that) {
 case _QuestionBlock():
-return $default(_that.ask,_that.answers);case _:
+return $default(_that.ask,_that.brandName,_that.answers);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.ask,_that.answers);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String ask,  Map<String, bool> answers)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String ask,  String brandName,  List<Answer> answers)?  $default,) {final _that = this;
 switch (_that) {
 case _QuestionBlock() when $default != null:
-return $default(_that.ask,_that.answers);case _:
+return $default(_that.ask,_that.brandName,_that.answers);case _:
   return null;
 
 }
@@ -207,15 +208,16 @@ return $default(_that.ask,_that.answers);case _:
 
 
 class _QuestionBlock implements QuestionBlock {
-  const _QuestionBlock({this.ask = "", final  Map<String, bool> answers = const {}}): _answers = answers;
+  const _QuestionBlock({required this.ask, required this.brandName, final  List<Answer> answers = const []}): _answers = answers;
   
 
-@override@JsonKey() final  String ask;
- final  Map<String, bool> _answers;
-@override@JsonKey() Map<String, bool> get answers {
-  if (_answers is EqualUnmodifiableMapView) return _answers;
+@override final  String ask;
+@override final  String brandName;
+ final  List<Answer> _answers;
+@override@JsonKey() List<Answer> get answers {
+  if (_answers is EqualUnmodifiableListView) return _answers;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_answers);
+  return EqualUnmodifiableListView(_answers);
 }
 
 
@@ -229,16 +231,16 @@ _$QuestionBlockCopyWith<_QuestionBlock> get copyWith => __$QuestionBlockCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QuestionBlock&&(identical(other.ask, ask) || other.ask == ask)&&const DeepCollectionEquality().equals(other._answers, _answers));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QuestionBlock&&(identical(other.ask, ask) || other.ask == ask)&&(identical(other.brandName, brandName) || other.brandName == brandName)&&const DeepCollectionEquality().equals(other._answers, _answers));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,ask,const DeepCollectionEquality().hash(_answers));
+int get hashCode => Object.hash(runtimeType,ask,brandName,const DeepCollectionEquality().hash(_answers));
 
 @override
 String toString() {
-  return 'QuestionBlock(ask: $ask, answers: $answers)';
+  return 'QuestionBlock(ask: $ask, brandName: $brandName, answers: $answers)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$QuestionBlockCopyWith<$Res> implements $QuestionBlockCopy
   factory _$QuestionBlockCopyWith(_QuestionBlock value, $Res Function(_QuestionBlock) _then) = __$QuestionBlockCopyWithImpl;
 @override @useResult
 $Res call({
- String ask, Map<String, bool> answers
+ String ask, String brandName, List<Answer> answers
 });
 
 
@@ -266,11 +268,12 @@ class __$QuestionBlockCopyWithImpl<$Res>
 
 /// Create a copy of QuestionBlock
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ask = null,Object? answers = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? ask = null,Object? brandName = null,Object? answers = null,}) {
   return _then(_QuestionBlock(
 ask: null == ask ? _self.ask : ask // ignore: cast_nullable_to_non_nullable
+as String,brandName: null == brandName ? _self.brandName : brandName // ignore: cast_nullable_to_non_nullable
 as String,answers: null == answers ? _self._answers : answers // ignore: cast_nullable_to_non_nullable
-as Map<String, bool>,
+as List<Answer>,
   ));
 }
 

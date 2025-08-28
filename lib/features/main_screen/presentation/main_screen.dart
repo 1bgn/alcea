@@ -1,6 +1,11 @@
-import 'package:asker/features/main_screen/domain/models/question_block.dart';
+import 'package:asker/common/MyColors.dart';
+import 'package:asker/common/widgets/custom_primary_button.dart';
 import 'package:asker/features/main_screen/presentation/controller/main_screen_controller.dart';
+import 'package:asker/features/main_screen/presentation/widget/answer_widget.dart';
+import 'package:asker/features/main_screen/presentation/widget/ask_widget.dart';
+import 'package:asker/features/main_screen/presentation/widget/brand.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:signals/signals_flutter.dart';
 
 class MainScreen extends StatefulWidget {
@@ -21,73 +26,154 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Watch((context) {
       return Scaffold(
-        body: Column(
+        body: Stack(
           children: [
-            Container(
-              height: 100,
-              color: Colors.blue,
-              child: Center(
-                child: Text(
-                  "Здесь будет логотип",
-                  style: TextStyle(color: Colors.white,fontSize: 24),
+            Positioned.fill(
+              child: Container(
+                child: Image.asset("assets/bg.png", fit: BoxFit.cover),
+              ),
+            ),
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  children: [
+                    Brand(text: controller.currentBlock.brandName),
+                    SizedBox(height: 8),
+                    AskWidget(text: controller.currentBlock.ask, number: 1),
+                    SizedBox(height: 32),
+                    Watch(
+                       (context) {
+                        return Column(
+                          children: controller.currentBlock.answers
+                              .map(
+                                (e) => Padding(
+                                  padding: EdgeInsets.only(bottom: 8),
+                                  child: AnswerWidget(text: e.answer,value: controller.currentAnswerValue(e),isCorrect: controller.checkingMode.value?controller.checkAnswer(e):null,onChanged: (v){
+                                    controller.setAnswer(e, v);
+                                    print("eeee $v");
+                                    print("ceracvear ${controller.currentAnswers.value}");
+                                  },),
+                                ),
+                              )
+                              .toList(),
+                        );
+                      }
+                    ),
+                    SizedBox(height: 24),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomPrimaryButton(
+                                  borderColor: Color(0xffB9F6E6),
+                                  onPressed: () {
+                                    controller.checkingMode.value = true;
+                                  },
+                                  enabledTextStyle: GoogleFonts.mulish(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 24,
+                                    height: 30 / 24,
+                                    color: MyColors.primaryColor,
+                                    letterSpacing: 0,
+                                  ),
+                                  disabledTextStyle: GoogleFonts.mulish(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 24,
+                                    height: 30 / 24,
+                                    color: Color(0xffC4EEE4),
+                                    letterSpacing: 0,
+                                  ),
+
+                                  enabled: controller.currentAnswers.value.isNotEmpty,
+
+                                  // disabledTextColor: Colors.red,
+
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xffF2FEFB),
+                                      Color(0xffDFF5EF),
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  child: Text(
+                                    "Проверить результат".toUpperCase(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 24,
+                                      height: 30 / 24,
+                                      letterSpacing: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: CustomPrimaryButton(
+                                  borderColor: MyColors.primaryColor,
+                                  onPressed: () {},
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff63E9CA),
+                                      Color(0xff3ED4B2),
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  child: Text(
+                                    "Следующий вопрос".toUpperCase(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 24,
+                                      height: 30 / 24,
+                                      letterSpacing: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomPrimaryButton(
+                                  borderColor: Color(0xffB9F6E6),
+                                  onPressed: () {},
+                                  icon: Image.asset("assets/back_arrow.png"),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xffF2FEFB),
+                                      Color(0xffDFF5EF),
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  child: Text(
+                                    "Начать заново".toUpperCase(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 24,
+                                      height: 30 / 24,
+                                      color: MyColors.primaryColor,
+                                      letterSpacing: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 48,),
-            Column(
-              children: controller.tasks.value
-                  .map(
-                    (e) => Column(
-                      children: [
-                        Row(children: [Text(e.ask)],mainAxisAlignment: MainAxisAlignment.center,),
-                        SizedBox(height: 24,),
-
-                        Builder(
-                          builder: (context) {
-                            final isMulti = e.isMultiAnswers;
-                            return Column(
-                              children: [
-                                Column(
-                                  children: e.answers.keys
-                                      .map(
-                                        (e) => Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(e),
-                                            isMulti
-                                                ? Checkbox(
-                                                    value: false,
-                                                    onChanged: (v) {},
-                                                  )
-                                                : Radio(
-                                                    value: true,
-                                                    groupValue: false,
-                                                    onChanged: (v) {},
-                                                  ),
-                                          ],
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                                Divider()
-                              ],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                  .toList(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MaterialButton(onPressed: (){},child: Text("Повторить",style: TextStyle(fontSize: 16,color: Colors.white),),color: Colors.blue,),
-SizedBox(width: 12,),
-                MaterialButton(onPressed: (){},child: Text("Завершить",style:  TextStyle(fontSize: 16,color: Colors.white),),color: Colors.green,),
-              ],
-            )
-
           ],
         ),
       );
