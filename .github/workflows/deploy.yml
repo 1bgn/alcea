@@ -7,27 +7,41 @@ on:
 permissions:
   contents: write
 
+env:
+  REPO_NAME: alcea   # <-- ИМЯ РЕПОЗИТОРИЯ (для base-href)
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # 1) Клонируем код
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 2) Ставим Flutter (последний stable)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable      # <— без flutter-version!
+          channel: stable
           cache: true
 
       - run: flutter --version
+
+      # 3) Готовим проект
       - run: flutter config --enable-web
       - run: flutter pub get
 
+      # 4) Генерируем код (freezed/injectable/json_serializable и т.д.)
+      - name: Run build_runner
+        run: dart run build_runner build --delete-conflicting-outputs
 
-      - run: flutter build web --release --base-href /asker/
+      # 5) Сборка web (ВАЖНО: base-href = /<repo>/)
+      - name: Build Web
+        run: flutter build web --release --base-href "/${{ env.REPO_NAME }}/"
 
+      # 6) Публикация в gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
