@@ -15,15 +15,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          channel: stable      # <— без flutter-version!
+          cache: true
 
+      - run: flutter --version
       - run: flutter config --enable-web
       - run: flutter pub get
 
 
-      - run: flutter build web --release --base-href /alcea/
+      - run: flutter build web --release --base-href /asker/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
