@@ -1,4 +1,4 @@
-name: Deploy Flutter Web to GitHub Pages
+name: Deploy Flutter Web
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           flutter-version: 'stable'
 
-      - name: Build Flutter Web
+      - name: Build Web
         run: flutter build web --release
 
       - name: Deploy to GitHub Pages
