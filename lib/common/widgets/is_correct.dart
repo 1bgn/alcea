@@ -1,0 +1,1 @@
+enum IsCorrect { correct, incorrect }

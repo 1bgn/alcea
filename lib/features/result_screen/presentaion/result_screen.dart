@@ -62,8 +62,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 child: CustomPrimaryButton(
                                   borderColor: Color(0xffB9F6E6),
                                   onPressed: () {
-                                    controller.clearAll();
-                                    Navigator.pop(context);
+                                    Navigator.of(context).popUntil((route) => route.isFirst);
                                   },
                                   icon: Image.asset("assets/back_arrow.png"),
                                   gradient: LinearGradient(

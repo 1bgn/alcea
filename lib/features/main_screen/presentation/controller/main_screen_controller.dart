@@ -4,6 +4,8 @@ import 'package:asker/features/main_screen/domain/models/question_block.dart';
 import 'package:asker/features/main_screen/domain/usecase/get_data_usecase.dart';
 import 'package:injectable/injectable.dart';
 import 'package:signals/signals.dart';
+
+import '../../../../common/widgets/is_correct.dart';
 @LazySingleton()
 class MainScreenController {
   final GetDataUsecase getDataUsecase;

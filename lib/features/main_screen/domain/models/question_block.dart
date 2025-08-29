@@ -11,6 +11,6 @@ abstract class QuestionBlock with _$QuestionBlock{
   @Default([])List<Answer> answers
 })=_QuestionBlock;
 }
-// extension QuestionBlockExtension on QuestionBlock{
-//
-// }
+extension QuestionBlockExtension on QuestionBlock{
+    bool get isSingleAnswer=>answers.where((a)=>a.isCorrect).length==1;
+}
