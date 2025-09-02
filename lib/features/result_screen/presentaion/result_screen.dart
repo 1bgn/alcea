@@ -34,15 +34,32 @@ class _ResultScreenState extends State<ResultScreen> {
             Positioned.fill(
               child: Align(
                 alignment: Alignment.center,
-                child: Text(
-                  "${controller.globalCorrectAsks.value}/${controller.tasks.value.length}",
-                  style: TextStyle(
-                    fontSize: 180,
-                    height: 240 / 180,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.w700,
-                    color: MyColors.secondColor,
-                  ),
+                child: Column(
+
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "${controller.globalCorrectAsks.value}/${controller.tasks.value.length}",
+                      style: TextStyle(
+                        fontSize: 180,
+                        height: 240 / 180,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.w700,
+                        color: MyColors.secondColor,
+                      ),
+                    ),
+                    Text(
+                      controller.globalCorrectAsks.value<=3?  "Спасибо за участие!":"Спасибо за участие!\nВы лучший врач!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 64,
+                        height: 90 / 64,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.w700,
+                        color: MyColors.secondColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
